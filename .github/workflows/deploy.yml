@@ -24,7 +24,9 @@ jobs:
           script: |
             set -e
 
-            cd ~/14th-be-ec2-session
+            cd test
+
+            cd 14th-be-ec2-session
 
             git pull origin main
 

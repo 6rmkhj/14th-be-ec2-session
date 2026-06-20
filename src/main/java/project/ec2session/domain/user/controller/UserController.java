@@ -6,11 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import project.ec2session.common.auth.CustomUserDetails;
 import project.ec2session.domain.user.dto.UserReq;
 import project.ec2session.domain.user.service.UserService;
@@ -52,5 +48,17 @@ public class UserController {
                                             @RequestBody @Valid UserReq.UpdateInfo request) {
         userService.update(userDetails.getUserId(), request);
         return ResponseEntity.ok("요청 성공");
+    }
+    @Operation(
+            summary = "회원 탈퇴",
+            description = "현재 로그인한 사용자를 삭제합니다."
+    )
+    @DeleteMapping
+    public ResponseEntity<?> deleteUser(
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        userService.delete(userDetails.getUserId());
+
+        return ResponseEntity.ok("회원 탈퇴 완료");
     }
 }
